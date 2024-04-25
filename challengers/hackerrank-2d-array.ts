@@ -18,42 +18,30 @@ const value2 = [
   [-3, -6, 0, -8, -6, -7],
 ];
 
-function getHourglass(
+const getHourglass = (
   arr: number[][],
   rowIndex: number,
   colIndex: number,
-): number[][] {
-  const hourglass = [];
-  hourglass.push(arr[rowIndex].slice(colIndex, colIndex + 3));
-  hourglass.push(arr[rowIndex + 1].slice(colIndex + 1, colIndex + 2));
-  hourglass.push(arr[rowIndex + 2].slice(colIndex, colIndex + 3));
-  return hourglass;
-}
+): number[][] => [
+  arr[rowIndex].slice(colIndex, colIndex + 3),
+  arr[rowIndex + 1].slice(colIndex + 1, colIndex + 2),
+  arr[rowIndex + 2].slice(colIndex, colIndex + 3),
+];
 
 function hourglassSum(arr: number[][]): number {
-  let sum = 0;
+  let maxSum = -Infinity;
 
-  arr.forEach((row, rowIndex) => {
-    if (rowIndex <= 3) {
-      row.forEach((col, colIndex) => {
-        if (colIndex <= 3) {
-          const currentHourglass = getHourglass(arr, rowIndex, colIndex);
-          console.log({ currentHourglass });
-          const currentSum = currentHourglass
-            .flat()
-            .reduce((acc, curr) => acc + curr, 0);
-          if (rowIndex === 0 && colIndex === 0) {
-            sum = currentSum;
-          } else if (currentSum > sum) {
-            sum = currentSum;
-          }
-        }
-        return sum;
-      });
+  for (let rowIndex = 0; rowIndex <= 3; rowIndex++) {
+    for (let colIndex = 0; colIndex <= 3; colIndex++) {
+      const currentHourglass = getHourglass(arr, rowIndex, colIndex);
+      const currentSum = currentHourglass
+        .flat()
+        .reduce((acc, curr) => acc + curr, 0);
+      maxSum = Math.max(maxSum, currentSum);
     }
-  });
+  }
 
-  return sum;
+  return maxSum;
 }
 
 console.log({
