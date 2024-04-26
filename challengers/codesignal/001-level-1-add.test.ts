@@ -1,4 +1,4 @@
-import { sum } from './codesignal-level-1-challenge-1';
+import { sum } from './001-level-1-add';
 
 describe('sum', () => {
   it('should return the sum of two numbers', () => {
